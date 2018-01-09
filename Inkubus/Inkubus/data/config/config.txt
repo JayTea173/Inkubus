@@ -2,5 +2,4 @@
 
 GameWindowSettings.width=400
 GameWindowSettings.height=210
-GameWindowSettings.fullscreen=1
-GameWindowSettings.color = green
+GameWindowSettings.fullscreen=true

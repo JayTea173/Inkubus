@@ -33,10 +33,10 @@ namespace Inkubus.Engine.IO
 
                         var assembly = Assembly.GetExecutingAssembly();
                         var allTypes = assembly.GetTypes();
-                        var type = assembly.GetType(expression[0]);
-                        var field = type.GetField(expression[1], BindingFlags.Static);
+                        var type = assembly.GetType("Inkubus.Engine." + expression[0]);
+                        var field = type.GetField(expression[1]);
 
-                        TypeConverter typeConverter = TypeDescriptor.GetConverter(field);
+                        TypeConverter typeConverter = TypeDescriptor.GetConverter(field.FieldType);
                         object typeValue = typeConverter.ConvertFromString(assignment[1]);
                         field.SetValue(field.FieldType, typeValue);
                     }
