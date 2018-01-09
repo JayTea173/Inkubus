@@ -36,5 +36,10 @@ namespace Inkubus.Engine.Graphics.Shaders
                 GL.DetachShader(id, shader.ID);
             return id;
         }
+
+        public void Use()
+        {
+            GL.UseProgram(id);
+        }
     }
 }
