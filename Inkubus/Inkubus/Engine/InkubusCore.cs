@@ -21,7 +21,7 @@ namespace Inkubus
 
         public InkubusCore(int x, int y, int width, int height, GraphicsMode mode, GameWindowFlags flags, DisplayDevice device) : base(width, height, mode, "Inkubus ~~" + versionString, flags, device, 4, 4, GraphicsContextFlags.ForwardCompatible)
         {
-            WindowBorder = WindowBorder.Hidden;
+           //WindowBorder = WindowBorder.Hidden;
             Load += OnWindowLoaded;
             RenderFrame += Render;
             Location = new Point(x, y);

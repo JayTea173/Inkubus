@@ -20,7 +20,13 @@ namespace Inkubus
             if (GameWindowSettings.height == 0)
                 GameWindowSettings.height = device.Height;
 
-            InkubusCore core = new InkubusCore(0, 0, GameWindowSettings.width, GameWindowSettings.height, GraphicsMode.Default, GameWindowFlags.Fullscreen, device);
+            InkubusCore core = new InkubusCore((GameWindowSettings.fullscreen) ? 0 : (device.Width / 2 - GameWindowSettings.width / 2),
+                (GameWindowSettings.fullscreen) ? 0 : (device.Height / 2 - GameWindowSettings.height / 2),
+                GameWindowSettings.width, 
+                GameWindowSettings.height, 
+                GraphicsMode.Default, 
+                GameWindowSettings.fullscreen ? GameWindowFlags.Fullscreen : GameWindowFlags.FixedWindow, 
+                device);
 
         }
     }
