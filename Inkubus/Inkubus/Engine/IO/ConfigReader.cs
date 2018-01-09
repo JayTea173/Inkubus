@@ -13,9 +13,9 @@ namespace Inkubus.Engine.IO
     {
         static readonly char[] assignmentOperator = new char[] { '=' };
         static readonly char[] nestingOperator = new char[] { '.' };
-        static void Reader()
+        public static void Read(string filePath)
         {
-            string[] config = File.ReadAllLines(@"C:\Inkubus\Inkubus\Inkubus\data\config.txt");
+            string[] config = File.ReadAllLines(@"..\data\config\" + filePath);
             
             foreach (string line in config)
             {
@@ -23,16 +23,23 @@ namespace Inkubus.Engine.IO
             }
             foreach (string line in config)
             {   
-                if (!((line[0] == '/') && (line[1] == '/')))
+                if (!line.StartsWith("//"))
                 {
                     var assignment = line.Split(assignmentOperator);
-                    var expression = assignment[0].Split(nestingOperator);
 
-                    var type = Assembly.GetExecutingAssembly().GetType(expression[0]).GetField(expression[1], BindingFlags.Static);
+                    if (assignment.Length > 1)
+                    {
+                        var expression = assignment[0].Split(nestingOperator);
 
-                    TypeConverter typeConverter = TypeDescriptor.GetConverter(type);
-                    object typeValue = typeConverter.ConvertFromString(assignment[1]);
-                    type.SetValue(type, typeValue);
+                        var assembly = Assembly.GetExecutingAssembly();
+                        var allTypes = assembly.GetTypes();
+                        var type = assembly.GetType(expression[0]);
+                        var field = type.GetField(expression[1], BindingFlags.Static);
+
+                        TypeConverter typeConverter = TypeDescriptor.GetConverter(field);
+                        object typeValue = typeConverter.ConvertFromString(assignment[1]);
+                        field.SetValue(field.FieldType, typeValue);
+                    }
                 }
             }
         }

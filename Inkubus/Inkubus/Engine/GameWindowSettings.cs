@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Inkubus.Engine
 {
-    static class GameWindowSettings
+    class GameWindowSettings
     {
-        public static int width;
-        public static int height;
-        public static bool fullscreen;
+        public static int width = 0;
+        public static int height = 0;
+        public static bool fullscreen = true;
     }
 }

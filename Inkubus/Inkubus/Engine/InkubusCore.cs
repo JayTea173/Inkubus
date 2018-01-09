@@ -10,6 +10,7 @@ namespace Inkubus
 {
     using Engine.Input;
     using Engine.Graphics.Shaders;
+    
 
     class InkubusCore : GameWindow
     {
