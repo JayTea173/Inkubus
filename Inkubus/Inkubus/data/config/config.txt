@@ -1,5 +1,6 @@
 //Screen settings
 
-screen_width = 1080
-screen_height = 1920
-fullscreen = true
+GameWindowSettings.width=400
+GameWindowSettings.height=210
+GameWindowSettings.fullscreen=1
+GameWindowSettings.color = green
