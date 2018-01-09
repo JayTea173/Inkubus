@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inkubus.Engine.GameWindowSettings
+namespace Inkubus.Engine
 {
     static class GameWindowSettings
     {

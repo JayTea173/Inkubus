@@ -63,11 +63,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\GameWindowSettings.cs" />
     <Compile Include="Engine\Graphics\Shaders\Shader.cs" />
     <Compile Include="Engine\Graphics\Shaders\ShaderManager.cs" />
     <Compile Include="Engine\Graphics\Shaders\ShaderProgram.cs" />
     <Compile Include="Engine\InkubusCore.cs" />
     <Compile Include="Engine\Input\InputManager.cs" />
+    <Compile Include="Engine\IO\ConfigReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
