@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using OpenTK;
@@ -9,6 +10,7 @@ using OpenTK.Input;
 namespace Inkubus
 {
     using Engine.Input;
+    using Engine.Graphics;
     using Engine.Graphics.Shaders;
     
 
@@ -20,10 +22,13 @@ namespace Inkubus
         protected ShaderProgram someShaderProgram;
         double time = 0.0d;
 
+        Mesh someMesh;
+
         protected InputManager inputManager;
 
         public InkubusCore(int x, int y, int width, int height, GraphicsMode mode, GameWindowFlags flags, DisplayDevice device) : base(width, height, mode, "Inkubus ~~" + versionString, flags, device, 4, 4, GraphicsContextFlags.ForwardCompatible)
         {
+            
             //WindowBorder = WindowBorder.Hidden;
             Load += OnWindowLoaded;
             Location = new Point(x, y);
@@ -52,6 +57,8 @@ namespace Inkubus
 
         void OnWindowLoaded(object o, EventArgs args)
         {
+            Debug.WriteLine("OpenGL Version: " + GL.GetString(StringName.Version));
+
             GL.ClearColor(0.0666f, 0f, 0f, 0f);
 
             someShaderProgram = ShaderManager.Instance.ReadShaderProgramFromFiles(new string[]
@@ -60,6 +67,16 @@ namespace Inkubus
                 "default.vert"
             });
             someShaderProgram.Link();
+
+            someMesh = new Mesh();
+            someMesh.SetVertices(new Vector4[]
+            {
+                new Vector4(-1f, -1f, 0f, 1f),
+                new Vector4(1f, -1f, 0f, 1f),
+                new Vector4(0f, 1f, 0f, 1f)
+            });
+
+            someMesh.Build();
         }
         protected override void OnResize(EventArgs args)
         {

@@ -11,9 +11,11 @@ namespace Inkubus
 
         static void Main(string[] args)
         {
-            DisplayDevice device = DisplayDevice.GetDisplay(0);
+           
 
             ConfigReader.Read("config.txt");
+
+            DisplayDevice device = DisplayDevice.GetDisplay((DisplayIndex)GameWindowSettings.displayID);
 
             if (GameWindowSettings.width == 0)
                 GameWindowSettings.width = device.Width;

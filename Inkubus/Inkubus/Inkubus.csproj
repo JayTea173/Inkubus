@@ -48,9 +48,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\JayDev\cs\OpenTK\1.1\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
+    <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.3.0.0-pre\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\GameWindowSettings.cs" />
+    <Compile Include="Engine\Graphics\Mesh.cs" />
     <Compile Include="Engine\Graphics\Shaders\Shader.cs" />
     <Compile Include="Engine\Graphics\Shaders\ShaderManager.cs" />
     <Compile Include="Engine\Graphics\Shaders\ShaderProgram.cs" />
@@ -77,6 +77,8 @@
     <None Include="App.config" />
     <None Include="data\shaders\default.frag" />
     <None Include="data\shaders\default.vert" />
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

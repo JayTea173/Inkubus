@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL4;
@@ -31,6 +31,11 @@ namespace Inkubus.Engine.Graphics.Shaders
         public int Link()
         {
             GL.LinkProgram(id);
+
+            string errLog = GL.GetProgramInfoLog(id);
+            if (!string.IsNullOrWhiteSpace(errLog))
+                Debug.WriteLine("GL.LinkProgram had info log: " + errLog);   
+            
 
             foreach (var shader in shaders)
                 GL.DetachShader(id, shader.ID);

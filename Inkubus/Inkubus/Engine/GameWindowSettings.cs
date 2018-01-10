@@ -11,5 +11,6 @@ namespace Inkubus.Engine
         public static int width = 0;
         public static int height = 0;
         public static bool fullscreen = true;
+        public static int displayID = 0;    
     }
 }

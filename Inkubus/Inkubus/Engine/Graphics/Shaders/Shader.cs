@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
@@ -22,6 +22,11 @@ namespace Inkubus.Engine.Graphics.Shaders
             id = GL.CreateShader(shaderType);
             GL.ShaderSource(id, data);
             GL.CompileShader(id);
+            string errLog = GL.GetShaderInfoLog(id);
+            if (!string.IsNullOrWhiteSpace(errLog))
+            {
+                Debug.WriteLine("GL.CompileShader [" + shaderType.ToString() + "] had info log: " + errLog);
+            }
         }
 
     }

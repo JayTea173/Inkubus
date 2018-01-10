@@ -3,3 +3,4 @@
 GameWindowSettings.width=400
 GameWindowSettings.height=210
 GameWindowSettings.fullscreen=false
+GameWindowSettings.displayID=0
