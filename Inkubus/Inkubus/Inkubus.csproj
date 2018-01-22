@@ -116,6 +116,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\config\config.txt" />
+    <Content Include="data\textures\Infector_Attack.png" />
+    <Content Include="data\textures\Infector_Walk.png" />
     <Content Include="data\textures\test.png" />
     <Content Include="data\textures\TrollBack.png" />
     <Content Include="data\textures\TrollFront.png" />
