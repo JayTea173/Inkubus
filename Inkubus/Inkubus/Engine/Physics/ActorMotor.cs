@@ -13,34 +13,48 @@ namespace Inkubus.Engine.Physics
     class ActorMotor
     {
         protected Actor actor;
-        protected Vector2 moveDir;
+        protected Vector2 targetMoveDir;
+        protected Vector2 moveDir; 
+
+        public float movementSpeed = 1f;
+
+
 
         public Vector2 MoveDir
         {
             get
             {
-                return moveDir;
+                return targetMoveDir;
             }
         }
 
         public ActorMotor(Actor _actor)
         {
             actor = _actor;
-            moveDir = Vector2.Zero;
+            targetMoveDir = Vector2.Zero;
         }
 
 
         public void Move(float x, float y)
         {
-            moveDir += Vector2.UnitX * x - Vector2.UnitY * y;
+            targetMoveDir += Vector2.UnitX * x - Vector2.UnitY * y;
         }
 
         public void Update()
         {
-            if (moveDir != Vector2.Zero)
+            if (targetMoveDir != Vector2.Zero) {
+                targetMoveDir.Normalize();
+
+                float lerp = InkubusCore.deltaTime * 50f;
+                if (lerp > 1f)
+                    lerp = 1f;
+                moveDir = moveDir * lerp + targetMoveDir * (1f - lerp);
                 moveDir.Normalize();
-            actor.Translate(moveDir);
-            moveDir = Vector2.Zero;
+            } else {
+                moveDir = Vector2.Zero;
+            }
+            actor.Translate(moveDir * movementSpeed * InkubusCore.deltaTime);
+            targetMoveDir = Vector2.Zero;
         }
  
 

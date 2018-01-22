@@ -23,6 +23,9 @@ namespace Inkubus.Engine.Input.Controllers
             base.RegisterEventHandlers(inputManager);
             inputManager.RegisterInputAxis(new AxisEvent(Key.S, Key.W, 1000.0f), character.Motor.MoveVertical);
             inputManager.RegisterInputAxis(new AxisEvent(Key.A, Key.D, 1000.0f), character.Motor.MoveHorizontal);
+
+            inputManager.RegisterKeybinding(new KeyboardEvent(Key.Space), character.Attack);
+
             /*inputManager.RegisterKeybinding(new KeyboardEvent(Key.W), character.Motor.MoveUp);
             inputManager.RegisterKeybinding(new KeyboardEvent(Key.S), character.Motor.MoveDown);
             inputManager.RegisterKeybinding(new KeyboardEvent(Key.A), character.Motor.MoveLeft);

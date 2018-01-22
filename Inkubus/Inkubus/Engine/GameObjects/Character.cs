@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 
 namespace Inkubus.Engine.GameObjects
 {
     using Graphics;
+    using Graphics.Animation;
     using Graphics.Renderers;
     using Graphics.Shaders;
     using Physics;
@@ -18,6 +20,12 @@ namespace Inkubus.Engine.GameObjects
         protected SpriteRenderer renderer;
         protected ActorMotor motor;
 
+        protected float movementSpeed = 1f;
+
+
+
+        
+
         public ActorMotor Motor
         {
             get
@@ -26,22 +34,25 @@ namespace Inkubus.Engine.GameObjects
             }
         }
 
-        public Character(Sprite sprite, ShaderProgram shader)
-        {
-            renderer = new SpriteRenderer(sprite, shader);
-            motor = new ActorMotor(this);
-        }
 
 
-        public Character(Sprite sprite, int shaderId)
+        public Character(string textureDir, int shaderId, int spriteSizeX, int spriteSizeY)
         {
-            renderer = new SpriteRenderer(sprite, ShaderManager.Instance.GetShaderProgramById(shaderId));
+            renderer = new SpriteRenderer(ShaderManager.Instance.GetShaderProgramById(shaderId), textureDir, spriteSizeX, spriteSizeY);
             motor = new ActorMotor(this);
+
+
+            renderer.SetAnimation(AnimationName.Idle);
+
         }
 
         public void Update()
         {
             renderer.Animate(motor.MoveDir);
+
+
+
+
             motor.Update();
         }
 
@@ -54,7 +65,7 @@ namespace Inkubus.Engine.GameObjects
         {
             base.Dispose();
             renderer.Dispose();
-            
+
         }
 
         struct Stats
@@ -66,7 +77,20 @@ namespace Inkubus.Engine.GameObjects
         {
 
         }
+
+        public void Attack()
+        {
+            if (renderer.CurrentAnimation.name == AnimationName.Idle || renderer.CurrentAnimation.name == AnimationName.Walk)
+            {
+                renderer.SetAnimation(AnimationName.Attack);
+            }
+        }
+
+        public void SetMovementSpeed(float pixelsPerSecond)
+        {
+            motor.movementSpeed = pixelsPerSecond;
+        }
     }
 
- 
+
 }

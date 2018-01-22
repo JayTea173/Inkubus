@@ -37,11 +37,12 @@ namespace Inkubus.Engine.Graphics
 
         public Texture(string fileName)
         {
-            Bitmap tmpbmp = (Bitmap)Image.FromFile("../data/textures/" + fileName);
+            Bitmap tmpbmp = (Bitmap)Image.FromFile(fileName);
             width = tmpbmp.Width;
             height = tmpbmp.Height;
             size = new Vector2(width, height);
-            pixeldata = new float[width * height * 4];
+            long arrSize = width * height * 4;
+            pixeldata = new float[arrSize];
 
             Color transp = tmpbmp.GetPixel(1, 1);
             tmpbmp.MakeTransparent(transp);

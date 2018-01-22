@@ -93,7 +93,7 @@ namespace Inkubus
 
             this.VSync = VSyncMode.On;
 
-            camera = new Camera(Width, Height, 1f);
+            camera = new Camera(Width, Height, 2f);
 
             GL.ClearColor(0.0666f, 0f, 0f, 0f);
 
@@ -108,7 +108,11 @@ namespace Inkubus
                 "default.vert"
             });
 
-            infector = new Character(new Sprite("Infector_Walk.png", 64, 64, 15), 0);
+            //new Sprite("Infector_Walk.png", 64, 64, 15)
+            //infector = new Character("Infector", 0, 64, 64);
+            infector = new Character("Hunter", 0, 192, 192);
+
+            infector.SetMovementSpeed(25.0f);
 
             controller = new CharacterController(infector);
             controller.RegisterEventHandlers(inputManager);

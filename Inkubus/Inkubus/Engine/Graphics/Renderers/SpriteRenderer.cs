@@ -12,6 +12,7 @@ namespace Inkubus.Engine.Graphics.Renderers
 {
 
     using Shaders;
+    using Animation;
 
     class SpriteRenderer : Renderer
     {
@@ -26,6 +27,28 @@ namespace Inkubus.Engine.Graphics.Renderers
 
         protected ShaderProgram shader;
 
+        protected SpriteAnimationList animations;
+        protected SpriteAnimation currentAnimation;
+
+        public SpriteAnimation CurrentAnimation
+        {
+            get
+            {
+                return currentAnimation;
+            }
+            set
+            {
+                if (currentAnimation != value)
+                {
+                    currentAnimation = value;
+                   
+                    SetSprite(value.spriteSheetVariants[0]);
+                    sprite.SetLooping(currentAnimation.loops);
+                }
+            }
+        }
+
+
         static SpriteRenderer()
         {
             quadMesh = new Mesh(Primitives.quad, PrimitiveType.TriangleStrip);
@@ -36,19 +59,43 @@ namespace Inkubus.Engine.Graphics.Renderers
             currentAngle = ((int)(rad / Mathf.PI / 2f * sprite.Angles) + 4) % sprite.Angles;
             while (currentAngle < 0)
                 currentAngle += sprite.Angles;
-            InkubusCore.Instance.Title = "Facing: " + currentAngle + " angle: " + rad;
+            
         }
 
         public virtual void Animate(Vector2 dir)
         {
-            if (dir.X != 0.0f || dir.Y != 0.0f)
+            if (currentAnimation.name == AnimationName.Attack || currentAnimation.name == AnimationName.Idle)
             {
-                SetFacingAngle((float)Math.Atan2(dir.Y, -dir.X));
-                animationTime += InkubusCore.deltaTime;
-                currentFrame = sprite.GetFrameByTime(animationTime);
+                AdvanceAnimation();
+                
+            }
+
+        
+           if (currentAnimation.name != AnimationName.Attack) { //when not stuck in attack animation
+                if (dir != Vector2.Zero)
+                    CurrentAnimation = animations.Get(AnimationName.Walk);
+                else
+                    CurrentAnimation = animations.Get(AnimationName.Idle);
+
+                if (sprite == null)
+                    return;
+
+
+                if (dir.X != 0.0f || dir.Y != 0.0f)
+                {
+                    SetFacingAngle((float)Math.Atan2(dir.Y, -dir.X));
+                    AdvanceAnimation();
+                }
             }
 
             
+        }
+
+        protected void AdvanceAnimation()
+        {
+            animationTime += InkubusCore.deltaTime;
+            currentFrame = sprite.GetFrameByTime(animationTime);
+            InkubusCore.Instance.Title = "facing: " + currentAngle + " frame: " + currentFrame;
         }
 
         public void SetFacingAngle(Vector2 dir)
@@ -65,12 +112,32 @@ namespace Inkubus.Engine.Graphics.Renderers
             scale = sprite.Size3;
         }
 
+        public SpriteRenderer(ShaderProgram shader, string textureDir, int spriteSizeX, int spriteSizeY)
+        {
+            this.shader = shader;
+            animations = new SpriteAnimationList(textureDir, spriteSizeX, spriteSizeY);
+        }
+
+        public void SetSprite(Sprite _sprite, bool _loopAnimation = true)
+        {
+            sprite = _sprite;
+            scale = sprite.Size3;
+            sprite.SetLooping(_loopAnimation);
+            currentFrame = sprite.GetFrameByTime(animationTime);
+
+        }
+
+        public void SetAnimation(AnimationName animationName)
+        {
+            CurrentAnimation = animations.Get(animationName);
+        }
 
 
         public override void Render(Actor actor)
         {
+            if (sprite == null)
+                return;
 
-            
 
 
             //rotation *= r1;
@@ -93,7 +160,8 @@ namespace Inkubus.Engine.Graphics.Renderers
         public override void Dispose()
         {
             base.Dispose();
-            sprite.Dispose();
+            if (sprite != null)
+                sprite.Dispose();
         }
     }
 }
