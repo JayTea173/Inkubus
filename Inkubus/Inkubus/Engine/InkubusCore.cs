@@ -10,9 +10,12 @@ using OpenTK.Input;
 namespace Inkubus
 {
     using Engine.Input;
+    using Engine.Input.Controllers;
+    using Engine.GameObjects;
     using Engine.Graphics;
     using Engine.Graphics.Shaders;
-    
+    using Engine.Graphics.Renderers;
+
 
     class InkubusCore : GameWindow
     {
@@ -20,15 +23,28 @@ namespace Inkubus
         public const string buildString = "180106";
 
         protected ShaderProgram someShaderProgram;
+
+
+
         double time = 0.0d;
 
-        Mesh someMesh;
-
+        protected Camera camera;
         protected InputManager inputManager;
+        protected GameRenderer renderer;
+
+        protected Character infector;
+
+        protected CharacterController controller;
+
+
+        public static float deltaTime = 0.0f;
+        public static double dDeltaTime = 0.0d;
+
+        public static InkubusCore Instance;
 
         public InkubusCore(int x, int y, int width, int height, GraphicsMode mode, GameWindowFlags flags, DisplayDevice device) : base(width, height, mode, "Inkubus ~~" + versionString, flags, device, 4, 4, GraphicsContextFlags.ForwardCompatible)
         {
-            
+            Instance = this;
             //WindowBorder = WindowBorder.Hidden;
             Load += OnWindowLoaded;
             Location = new Point(x, y);
@@ -36,47 +52,78 @@ namespace Inkubus
 
             inputManager = new InputManager();
             Run(1.0d / 60.0d);
-           
+
+
+
 
         }
 
         private void OnClosed(object sender, EventArgs eventArgs)
         {
+            
+            Exit();
+        }
+
+        public override void Exit()
+        {
+            infector.Dispose();
             ShaderManager.Instance.Destroy();
+
+            base.Exit();
         }
 
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             base.OnKeyDown(e);
+            inputManager.OnKeyDown(e);
             
-            if ((e.Alt && e.Key == Key.F4) || e.Key == Key.Escape)
-                Environment.Exit(0);
-            
+
+        }
+
+        protected override void OnKeyUp(KeyboardKeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+            inputManager.OnKeyUp(e);
         }
 
         void OnWindowLoaded(object o, EventArgs args)
         {
             Debug.WriteLine("OpenGL Version: " + GL.GetString(StringName.Version));
 
+            this.VSync = VSyncMode.On;
+
+            camera = new Camera(Width, Height, 1f);
+
             GL.ClearColor(0.0666f, 0f, 0f, 0f);
 
-            someShaderProgram = ShaderManager.Instance.ReadShaderProgramFromFiles(new string[]
+
+            /*sprite = new Sprite("Infector_Walk.png", 64, 64, 15);
+            spriteRenderer = new SpriteRenderer(sprite);
+            actor = new Actor();*/
+
+            ShaderManager.Instance.ReadShaderProgramFromFiles(new string[]
             {
                 "default.frag",
                 "default.vert"
             });
-            someShaderProgram.Link();
 
-            someMesh = new Mesh();
-            someMesh.SetVertices(new Vector4[]
-            {
-                new Vector4(-1f, -1f, 0f, 1f),
-                new Vector4(1f, -1f, 0f, 1f),
-                new Vector4(0f, 1f, 0f, 1f)
-            });
+            infector = new Character(new Sprite("Infector_Walk.png", 64, 64, 15), 0);
 
-            someMesh.Build();
+            controller = new CharacterController(infector);
+            controller.RegisterEventHandlers(inputManager);
+
+            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
+            GL.Enable(EnableCap.PolygonOffsetFill);
+            GL.Enable(EnableCap.Blend);
+            GL.DepthMask(false);
+            GL.PatchParameter(PatchParameterInt.PatchVertices, 3);
+            GL.PointSize(3);
+
+            GL.Disable(EnableCap.CullFace);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.SrcAlpha);
+
         }
         protected override void OnResize(EventArgs args)
         {
@@ -85,21 +132,30 @@ namespace Inkubus
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            deltaTime = (float)e.Time;
+            dDeltaTime = e.Time;
             time += e.Time;
+
+            inputManager.DigestAll();
+
+
+            infector.Update();
+            
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            someShaderProgram.Use();
+           
+
+            camera.Bind();
+
+            infector.Render();
+           
+
+            
+            //sprite.Rotate(deltaTime * 10.0f);
+            //sprite.Rotate(deltaTime * 90f);
 
 
-            Vector4 position;
-            position.X = (float)Math.Sin(time) * 0.5f;
-            position.Y = (float)Math.Cos(time) * 0.5f;
-            position.Z = 0.0f;
-            position.W = 1.0f;
-            GL.VertexAttrib4(1, position);
-
-            GL.DrawArrays(PrimitiveType.Points, 0, 1);
-            GL.PointSize(10.0f);
 
             SwapBuffers();
         }

@@ -39,7 +39,7 @@ namespace Inkubus.Engine.Graphics.Shaders
                 return null;
         }
 
-        public ShaderProgram ReadShaderProgramFromFiles(string[] shaderFiles)
+        public ShaderProgram ReadShaderProgramFromFiles(string[] shaderFiles, bool link = true)
         {
             List<Shader> shaders = new List<Shader>();
             foreach (var shaderFile in shaderFiles)
@@ -48,9 +48,18 @@ namespace Inkubus.Engine.Graphics.Shaders
             ShaderProgram program = new ShaderProgram("default", shaders.ToArray());
             programs.Add(program);
 
+            if (link)
+                program.Link();
+
             return program;
         }
 
-        
+        public ShaderProgram GetShaderProgramById(int id)
+        {
+            return programs[id];
+        }
+
+
+
     }
 }

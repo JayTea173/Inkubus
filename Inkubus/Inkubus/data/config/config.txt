@@ -1,6 +1,6 @@
 //Screen settings
 
-GameWindowSettings.width=400
-GameWindowSettings.height=210
+GameWindowSettings.width=1024
+GameWindowSettings.height=576
 GameWindowSettings.fullscreen=false
 GameWindowSettings.displayID=0

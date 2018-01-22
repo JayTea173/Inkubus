@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics;
 
@@ -22,6 +23,7 @@ namespace Inkubus
             if (GameWindowSettings.height == 0)
                 GameWindowSettings.height = device.Height;
 
+            Debug.WriteLine("Using gfx device: " + device.ToString());
             InkubusCore core = new InkubusCore((GameWindowSettings.fullscreen) ? 0 : (device.Width / 2 - GameWindowSettings.width / 2),
                 (GameWindowSettings.fullscreen) ? 0 : (device.Height / 2 - GameWindowSettings.height / 2),
                 GameWindowSettings.width, 

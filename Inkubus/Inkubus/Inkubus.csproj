@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -62,14 +63,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Graphics\Animation\SpriteAnimation.cs" />
+    <Compile Include="Engine\Input\AxisEvent.cs" />
+    <Compile Include="Engine\Input\AxisManager.cs" />
+    <Compile Include="Engine\Input\Controllers\CharacterController.cs" />
+    <Compile Include="Engine\Input\Controllers\Controller.cs" />
+    <Compile Include="Engine\GameObjects\Actor.cs" />
+    <Compile Include="Engine\GameObjects\Character.cs" />
+    <Compile Include="Engine\GameObjects\GameObject.cs" />
+    <Compile Include="Engine\GameObjects\ITranslateable.cs" />
     <Compile Include="Engine\GameWindowSettings.cs" />
+    <Compile Include="Engine\Graphics\Camera.cs" />
     <Compile Include="Engine\Graphics\Mesh.cs" />
+    <Compile Include="Engine\Graphics\Primitives.cs" />
+    <Compile Include="Engine\Graphics\Renderers\GameRenderer.cs" />
+    <Compile Include="Engine\Graphics\Renderers\Renderer.cs" />
+    <Compile Include="Engine\Graphics\Renderers\SpriteRenderer.cs" />
     <Compile Include="Engine\Graphics\Shaders\Shader.cs" />
     <Compile Include="Engine\Graphics\Shaders\ShaderManager.cs" />
     <Compile Include="Engine\Graphics\Shaders\ShaderProgram.cs" />
+    <Compile Include="Engine\Graphics\Sprite.cs" />
+    <Compile Include="Engine\Graphics\Texture.cs" />
+    <Compile Include="Engine\Graphics\Vertex.cs" />
     <Compile Include="Engine\InkubusCore.cs" />
     <Compile Include="Engine\Input\InputManager.cs" />
+    <Compile Include="Engine\Input\KeyboardEvent.cs" />
     <Compile Include="Engine\IO\ConfigReader.cs" />
+    <Compile Include="Engine\Mathf.cs" />
+    <Compile Include="Engine\Object.cs" />
+    <Compile Include="Engine\Physics\ActorMotor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -94,6 +116,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\config\config.txt" />
+    <Content Include="data\textures\test.png" />
+    <Content Include="data\textures\TrollBack.png" />
+    <Content Include="data\textures\TrollFront.png" />
+    <Content Include="data\textures\TrollSide.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
