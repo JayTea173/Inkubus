@@ -98,7 +98,9 @@ namespace Inkubus.Engine.Physics
             else {
                 moveDir = Vector2.Zero;
             }
-            actor.Translate(moveDir * movementSpeed * InkubusCore.deltaTime);
+
+            if (!actor.HasFlag(ActorFlags.CantMove))
+                actor.Translate(moveDir * movementSpeed * InkubusCore.deltaTime);
             targetDir = Vector2.Zero;
         }
 

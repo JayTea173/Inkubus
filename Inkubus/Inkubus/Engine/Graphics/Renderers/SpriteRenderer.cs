@@ -54,7 +54,9 @@ namespace Inkubus.Engine.Graphics.Renderers
                 if (currentAnimation != value)
                 {
                     if (currentAnimation != null)
+                    {
                         parent.RemoveFlag(currentAnimation.flags);
+                    }
 
                     currentAnimation = value;
 
@@ -87,8 +89,13 @@ namespace Inkubus.Engine.Graphics.Renderers
                 if (AdvanceAnimation())
                 {
                     onAnimationDone.Invoke(this);
+
                 }
 
+                if (faceDir.X != 0.0f || faceDir.Y != 0.0f)
+                {
+                    SetFacingAngle((float)Math.Atan2(faceDir.Y, -faceDir.X));
+                }
             }
 
             if (currentAnimation.name != AnimationName.Attack)

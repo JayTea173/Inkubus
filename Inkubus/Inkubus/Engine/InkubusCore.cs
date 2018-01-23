@@ -110,6 +110,7 @@ namespace Inkubus
                 "default.vert"
             });
 
+            
             //new Sprite("Infector_Walk.png", 64, 64, 15)
             //infector = new Character("Infector", 0, 64, 64);
             infector = new Character("Hunter", 0, 192, 192);
@@ -130,6 +131,7 @@ namespace Inkubus
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
             GL.Enable(EnableCap.PolygonOffsetFill);
             GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.DepthTest);
             GL.DepthMask(false);
             GL.PatchParameter(PatchParameterInt.PatchVertices, 3);
             GL.PointSize(3);

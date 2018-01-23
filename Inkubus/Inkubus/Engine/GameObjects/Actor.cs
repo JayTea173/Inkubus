@@ -53,13 +53,12 @@ namespace Inkubus.Engine.GameObjects
         public void AddFlag(ActorFlags flag)
         {
             flags |= flag;
-            InkubusCore.Instance.Title = "Flags: " + flags.ToString();
         }
 
         public void RemoveFlag(ActorFlags flag)
         {
             flags &= flag;
-            InkubusCore.Instance.Title = "Flags: " + flags.ToString();
+
         }
 
         public bool HasFlag(ActorFlags flag)

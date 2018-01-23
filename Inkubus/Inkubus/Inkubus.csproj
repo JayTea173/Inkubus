@@ -91,6 +91,7 @@
     <Compile Include="Engine\Input\InputManager.cs" />
     <Compile Include="Engine\Input\KeyboardEvent.cs" />
     <Compile Include="Engine\IO\ConfigReader.cs" />
+    <Compile Include="Engine\IO\DataContainer.cs" />
     <Compile Include="Engine\Mathf.cs" />
     <Compile Include="Engine\Object.cs" />
     <Compile Include="Engine\Physics\ActorMotor.cs" />
@@ -117,7 +118,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\config\config.txt" />
     <Content Include="data\textures\Hunter\Hunter_Attack.png" />
     <Content Include="data\textures\Hunter\Hunter_Idle.png" />
     <Content Include="data\textures\Hunter\Hunter_Walk.png" />
@@ -129,7 +129,10 @@
     <Content Include="data\textures\TrollFront.png" />
     <Content Include="data\textures\TrollSide.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="data\characters\" />
+    <Folder Include="data\config\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
