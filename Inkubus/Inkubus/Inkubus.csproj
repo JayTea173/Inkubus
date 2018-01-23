@@ -47,6 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -65,7 +66,9 @@
   <ItemGroup>
     <Compile Include="Engine\Flags.cs" />
     <Compile Include="Engine\GameObjects\Characters\Attack.cs" />
+    <Compile Include="Engine\GameObjects\World.cs" />
     <Compile Include="Engine\Graphics\Animation\SpriteAnimationList.cs" />
+    <Compile Include="Engine\Graphics\Renderers\WorldRenderer.cs" />
     <Compile Include="Engine\Input\AxisEvent.cs" />
     <Compile Include="Engine\Input\AxisManager.cs" />
     <Compile Include="Engine\Input\Controllers\CharacterController.cs" />

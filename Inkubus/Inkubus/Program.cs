@@ -12,7 +12,6 @@ namespace Inkubus
 
         static void Main(string[] args)
         {
-           
 
             ConfigReader.Read("config.txt");
 

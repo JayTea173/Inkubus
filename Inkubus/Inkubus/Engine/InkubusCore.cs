@@ -38,6 +38,8 @@ namespace Inkubus
 
         protected CharacterController controller;
 
+        protected World world;
+
 
         public static float deltaTime = 0.0f;
         public static double dDeltaTime = 0.0d;
@@ -123,7 +125,10 @@ namespace Inkubus
             r.onAnimationDone += infector.OnAttackAnimationEnd;
             r.Animations.Get(AnimationName.Attack).AddFlag(ActorFlags.CantMove); 
 
+            world = new Engine.GameObjects.World(8, 8);
+            world.Fill(new WorldTile(new Engine.Graphics.Sprite("..\\data\\textures\\ForestTile.png", 64f, 64f, 1f, false), r.Shader));
             
+
             controller = new CharacterController(infector);
             controller.RegisterEventHandlers(inputManager);
 
@@ -131,13 +136,15 @@ namespace Inkubus
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
             GL.Enable(EnableCap.PolygonOffsetFill);
             GL.Enable(EnableCap.Blend);
+            GL.DepthMask(true);
             GL.Enable(EnableCap.DepthTest);
-            GL.DepthMask(false);
+
             GL.PatchParameter(PatchParameterInt.PatchVertices, 3);
             GL.PointSize(3);
 
             GL.Disable(EnableCap.CullFace);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.SrcAlpha);
+            GL.Enable(EnableCap.DepthTest);
 
         }
         protected override void OnResize(EventArgs args)
@@ -153,7 +160,6 @@ namespace Inkubus
 
             inputManager.DigestAll();
 
-
             infector.Update();
             
 
@@ -163,6 +169,7 @@ namespace Inkubus
 
             camera.Bind();
 
+            world.Render();
             infector.Render();
            
 

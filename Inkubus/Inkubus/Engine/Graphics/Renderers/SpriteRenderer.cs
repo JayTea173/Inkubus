@@ -17,7 +17,7 @@ namespace Inkubus.Engine.Graphics.Renderers
     class SpriteRenderer : Renderer
     {
 
-        protected static Mesh quadMesh;
+        public static Mesh quadMesh;
         protected Sprite sprite;
 
         protected int currentFrame;
@@ -26,6 +26,14 @@ namespace Inkubus.Engine.Graphics.Renderers
         private float animationTime;
 
         protected ShaderProgram shader;
+
+        public ShaderProgram Shader
+        {
+            get
+            {
+                return shader;
+            }
+        }
 
         protected SpriteAnimationList animations;
 

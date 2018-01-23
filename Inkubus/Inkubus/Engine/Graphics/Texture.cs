@@ -17,7 +17,8 @@ namespace Inkubus.Engine.Graphics
         protected int width, height;
         protected Vector2 size;
 
-        public int Width {
+        public int Width
+        {
             get
             {
                 return width;
@@ -35,7 +36,7 @@ namespace Inkubus.Engine.Graphics
         protected float[] pixeldata;
         protected int id;
 
-        public Texture(string fileName)
+        public Texture(string fileName, bool transparent = true)
         {
             Bitmap tmpbmp = (Bitmap)Image.FromFile(fileName);
             width = tmpbmp.Width;
@@ -44,18 +45,23 @@ namespace Inkubus.Engine.Graphics
             long arrSize = width * height * 4;
             pixeldata = new float[arrSize];
 
-            Color transp = tmpbmp.GetPixel(1, 1);
-            tmpbmp.MakeTransparent(transp);
+            if (transparent)
+            {
+                Color transp = tmpbmp.GetPixel(1, 1);
+                tmpbmp.MakeTransparent(transp);
+            }
+
 
             int i = 0;
             BitmapData bmpdata = null;
-           
-            try {
+
+            try
+            {
                 bmpdata = tmpbmp.LockBits(new Rectangle(0, 0, width, height),
                     System.Drawing.Imaging.ImageLockMode.ReadOnly,
                       System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
-                
+
                 unsafe
                 {
                     var ptr = (byte*)bmpdata.Scan0;
@@ -113,7 +119,7 @@ namespace Inkubus.Engine.Graphics
         public virtual void Bind()
         {
             GL.BindTexture(TextureTarget.Texture2D, id);
-            
+
         }
 
         public void Dispose()
