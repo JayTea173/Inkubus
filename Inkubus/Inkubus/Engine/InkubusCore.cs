@@ -13,6 +13,7 @@ namespace Inkubus
     using Engine.Input.Controllers;
     using Engine.GameObjects;
     using Engine.Graphics;
+    using Engine.Graphics.Animation;
     using Engine.Graphics.Shaders;
     using Engine.Graphics.Renderers;
 
@@ -113,7 +114,8 @@ namespace Inkubus
             infector = new Character("Hunter", 0, 192, 192);
 
             infector.SetMovementSpeed(25.0f);
-
+            infector.SetTurnRate(270.0f);
+            
             controller = new CharacterController(infector);
             controller.RegisterEventHandlers(inputManager);
 

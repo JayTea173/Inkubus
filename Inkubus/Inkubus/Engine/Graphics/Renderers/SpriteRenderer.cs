@@ -28,6 +28,17 @@ namespace Inkubus.Engine.Graphics.Renderers
         protected ShaderProgram shader;
 
         protected SpriteAnimationList animations;
+
+        public event AnimationEventFunction onAnimationDone;
+
+        public SpriteAnimationList Animations
+        {
+            get
+            {
+                return animations;
+            }
+        }
+
         protected SpriteAnimation currentAnimation;
 
         public SpriteAnimation CurrentAnimation
@@ -41,7 +52,7 @@ namespace Inkubus.Engine.Graphics.Renderers
                 if (currentAnimation != value)
                 {
                     currentAnimation = value;
-                   
+
                     SetSprite(value.spriteSheetVariants[0]);
                     sprite.SetLooping(currentAnimation.loops);
                 }
@@ -59,20 +70,25 @@ namespace Inkubus.Engine.Graphics.Renderers
             currentAngle = ((int)(rad / Mathf.PI / 2f * sprite.Angles) + 4) % sprite.Angles;
             while (currentAngle < 0)
                 currentAngle += sprite.Angles;
-            
+
         }
 
-        public virtual void Animate(Vector2 dir)
+        public virtual void Animate(Vector2 faceDir, Vector2 moveDir)
         {
-            if (currentAnimation.name == AnimationName.Attack || currentAnimation.name == AnimationName.Idle)
+            if (CurrentAnimation.name == AnimationName.Attack)
             {
-                AdvanceAnimation();
-                
+                if (AdvanceAnimation())
+                {
+                    var args = new AnimationEventArgs();
+                    args.renderer = this;
+                    onAnimationDone.Invoke(args);
+                }
+
             }
 
-        
-           if (currentAnimation.name != AnimationName.Attack) { //when not stuck in attack animation
-                if (dir != Vector2.Zero)
+            if (currentAnimation.name != AnimationName.Attack)
+            { //when not stuck in attack animation
+                if (moveDir != Vector2.Zero)
                     CurrentAnimation = animations.Get(AnimationName.Walk);
                 else
                     CurrentAnimation = animations.Get(AnimationName.Idle);
@@ -81,21 +97,28 @@ namespace Inkubus.Engine.Graphics.Renderers
                     return;
 
 
-                if (dir.X != 0.0f || dir.Y != 0.0f)
+                if (faceDir.X != 0.0f || faceDir.Y != 0.0f)
                 {
-                    SetFacingAngle((float)Math.Atan2(dir.Y, -dir.X));
+                    SetFacingAngle((float)Math.Atan2(faceDir.Y, -faceDir.X));
                     AdvanceAnimation();
+                    //InkubusCore.Instance.Title = "facing: " + currentAngle + " frame: " + currentFrame + ", dir: " + dir.X.ToString("0.00") + ", " + dir.Y.ToString("0.00");
                 }
             }
 
-            
+
         }
 
-        protected void AdvanceAnimation()
+        protected bool AdvanceAnimation()
         {
             animationTime += InkubusCore.deltaTime;
-            currentFrame = sprite.GetFrameByTime(animationTime);
-            InkubusCore.Instance.Title = "facing: " + currentAngle + " frame: " + currentFrame;
+            currentFrame = CurrentAnimation.GetFrameByTime(animationTime);
+            if (!CurrentAnimation.loops)
+                if (CurrentAnimation.IsDone(currentFrame))
+                {
+                    return true;
+                }
+
+            return false;
         }
 
         public void SetFacingAngle(Vector2 dir)
@@ -110,12 +133,14 @@ namespace Inkubus.Engine.Graphics.Renderers
             this.sprite = sprite;
             this.shader = shader;
             scale = sprite.Size3;
+            SetAnimation(AnimationName.Idle);
         }
 
         public SpriteRenderer(ShaderProgram shader, string textureDir, int spriteSizeX, int spriteSizeY)
         {
             this.shader = shader;
             animations = new SpriteAnimationList(textureDir, spriteSizeX, spriteSizeY);
+            SetAnimation(AnimationName.Idle);
         }
 
         public void SetSprite(Sprite _sprite, bool _loopAnimation = true)
@@ -123,13 +148,16 @@ namespace Inkubus.Engine.Graphics.Renderers
             sprite = _sprite;
             scale = sprite.Size3;
             sprite.SetLooping(_loopAnimation);
-            currentFrame = sprite.GetFrameByTime(animationTime);
+            currentFrame = CurrentAnimation.GetFrameByTime(animationTime);
 
         }
 
-        public void SetAnimation(AnimationName animationName)
+        public void SetAnimation(AnimationName animationName, bool resetAnimationToStart = false)
         {
+            if (resetAnimationToStart)
+                animationTime = 0f;
             CurrentAnimation = animations.Get(animationName);
+
         }
 
 

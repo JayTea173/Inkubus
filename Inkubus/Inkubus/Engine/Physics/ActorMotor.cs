@@ -13,10 +13,12 @@ namespace Inkubus.Engine.Physics
     class ActorMotor
     {
         protected Actor actor;
-        protected Vector2 targetMoveDir;
-        protected Vector2 moveDir; 
+        protected Vector2 targetDir;
+        protected Vector2 moveDir;
+        protected Vector2 facing;
 
         public float movementSpeed = 1f;
+        public float turnRate = 1f;
 
 
 
@@ -24,39 +26,79 @@ namespace Inkubus.Engine.Physics
         {
             get
             {
-                return targetMoveDir;
+                return moveDir;
+            }
+        }
+
+        public Vector2 Facing
+        {
+            get
+            {
+                return facing;
             }
         }
 
         public ActorMotor(Actor _actor)
         {
             actor = _actor;
-            targetMoveDir = Vector2.Zero;
+            targetDir = Vector2.UnitY;
+            facing = targetDir;
+
+            moveDir = targetDir;
         }
 
 
         public void Move(float x, float y)
         {
-            targetMoveDir += Vector2.UnitX * x - Vector2.UnitY * y;
+            targetDir += Vector2.UnitX * x - Vector2.UnitY * y;
+            moveDir = targetDir;
         }
 
         public void Update()
         {
-            if (targetMoveDir != Vector2.Zero) {
-                targetMoveDir.Normalize();
 
-                float lerp = InkubusCore.deltaTime * 50f;
-                if (lerp > 1f)
-                    lerp = 1f;
-                moveDir = moveDir * lerp + targetMoveDir * (1f - lerp);
-                moveDir.Normalize();
-            } else {
+
+            if (targetDir != Vector2.Zero)
+            {
+                targetDir.Normalize();
+
+                facing.Normalize();
+
+                float dot = Vector2.Dot(targetDir, new Vector2(-facing.Y, facing.X));
+                if (dot == 0f && facing != targetDir)
+                {
+                    //this is when we look in the exact opposite direction we want to go - always turn right
+                    dot = 1;
+                }
+                InkubusCore.Instance.Title = "facing: " + facing + "scalar: " + dot;
+                float angle = turnRate * Mathf.ToDeg * InkubusCore.deltaTime;
+                float dotAbs = dot;
+
+                if (dotAbs < 0f)
+                    dotAbs = -dotAbs;
+
+                if (dotAbs < 0.01 * turnRate * InkubusCore.deltaTime)
+                {
+                    facing = targetDir;
+                }
+                else {
+                    if (dot < 0f)
+                        angle *= -1f;
+
+
+                    float sin = (float)Math.Sin(angle);
+                    float cos = (float)Math.Cos(angle);
+
+                    facing = new Vector2(facing.X * cos - facing.Y * sin, facing.X * sin + facing.Y * cos);
+                }
+            }
+            else {
                 moveDir = Vector2.Zero;
             }
             actor.Translate(moveDir * movementSpeed * InkubusCore.deltaTime);
-            targetMoveDir = Vector2.Zero;
+            targetDir = Vector2.Zero;
         }
- 
+
 
         public void MoveVertical(float v)
         {

@@ -18,6 +18,15 @@ namespace Inkubus.Engine.GameObjects
     class Character : Actor
     {
         protected SpriteRenderer renderer;
+
+        public SpriteRenderer Renderer
+        {
+            get
+            {
+                return Renderer;
+            }
+        }
+
         protected ActorMotor motor;
 
         protected float movementSpeed = 1f;
@@ -48,9 +57,9 @@ namespace Inkubus.Engine.GameObjects
 
         public void Update()
         {
-            renderer.Animate(motor.MoveDir);
 
 
+            renderer.Animate(motor.Facing, motor.MoveDir);
 
 
             motor.Update();
@@ -82,7 +91,7 @@ namespace Inkubus.Engine.GameObjects
         {
             if (renderer.CurrentAnimation.name == AnimationName.Idle || renderer.CurrentAnimation.name == AnimationName.Walk)
             {
-                renderer.SetAnimation(AnimationName.Attack);
+                renderer.SetAnimation(AnimationName.Attack, true);
             }
         }
 
@@ -90,6 +99,12 @@ namespace Inkubus.Engine.GameObjects
         {
             motor.movementSpeed = pixelsPerSecond;
         }
+
+        public void SetTurnRate(float degreesPerSecond)
+        {
+            motor.turnRate = degreesPerSecond;
+        }
+
     }
 
 

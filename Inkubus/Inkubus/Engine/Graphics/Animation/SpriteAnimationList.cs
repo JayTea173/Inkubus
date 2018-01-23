@@ -7,6 +7,19 @@ using System.IO;
 
 namespace Inkubus.Engine.Graphics.Animation
 {
+
+    using Graphics.Renderers;
+
+    delegate void AnimationEventFunction(AnimationEventArgs args);
+
+     struct AnimationEventArgs
+    {
+
+        public SpriteRenderer renderer;
+
+
+    }
+
     class SpriteAnimationList
     {
         protected SpriteAnimation[] animations;
@@ -61,6 +74,10 @@ namespace Inkubus.Engine.Graphics.Animation
         public AnimationName name;
         public int animationFlags;
         public bool loops = true;
+        public bool playing = false;
+        public int currentVariation = 0;
+        //public event AnimationEventFunction onFinish;
+
 
         public SpriteAnimation(Sprite sprite, AnimationName animationName)
         {
@@ -71,7 +88,7 @@ namespace Inkubus.Engine.Graphics.Animation
             
 
         }
-
+   
         public SpriteAnimation(Sprite[] sprite, AnimationName animationName)
         {
             spriteSheetVariants = sprite;
@@ -79,6 +96,26 @@ namespace Inkubus.Engine.Graphics.Animation
             loops = !(animationName == AnimationName.Attack || animationName == AnimationName.Death);
         }
 
+        public int GetFrameByTime(float animationTime)
+        {
+            var sprite = spriteSheetVariants[currentVariation];
+
+            if (loops)
+                return (int)(animationTime * sprite.FPS) % (sprite.Frames);
+            else {
+                int frame = (int)(animationTime * sprite.FPS);
+                if (frame >= sprite.Frames)
+                {
+                    frame = sprite.Frames - 1;
+                }
+                return frame;
+            }
+        }
+
+        public bool IsDone(int frame)
+        {
+            return frame >= spriteSheetVariants[currentVariation].Frames;
+        }
     }
 
     public enum AnimationName
