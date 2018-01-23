@@ -71,9 +71,9 @@ namespace Inkubus.Engine.Graphics
 
         protected bool loopAnimation = true;
 
-        public Sprite(string textureFileName, float sizeX, float sizeY, float fps, bool transparent = true)
+        public Sprite(string textureFileName, float sizeX, float sizeY, float fps)
         {
-            texture = new Texture(textureFileName,transparent);
+            texture = new Texture(textureFileName);
             rotation = Matrix4.Identity;
             position = Vector3.Zero;
 

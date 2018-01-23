@@ -8,13 +8,19 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
 
-namespace Inkubus.Engine.Graphics
+namespace Inkubus.Engine.GameObjects
 {
-    class Camera
+    using Graphics;
+    class Camera : Actor
     {
         Matrix4 projectionMatrix;
+
+        public static Camera current;
+
         public Camera(int width, int height, float pixelUpscaling)
         {
+            current = this;
+
             var aspectRatio = (float)width / height;
             /*projectionMatrix = Matrix4.CreatePerspectiveFieldOfView(
                 60.0f * ((float)Math.PI / 180f), // field of view angle, in radians

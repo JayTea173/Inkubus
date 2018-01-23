@@ -78,7 +78,7 @@
     <Compile Include="Engine\GameObjects\GameObject.cs" />
     <Compile Include="Engine\GameObjects\ITranslateable.cs" />
     <Compile Include="Engine\GameWindowSettings.cs" />
-    <Compile Include="Engine\Graphics\Camera.cs" />
+    <Compile Include="Engine\GameObjects\Camera.cs" />
     <Compile Include="Engine\Graphics\Mesh.cs" />
     <Compile Include="Engine\Graphics\Primitives.cs" />
     <Compile Include="Engine\Graphics\Renderers\GameRenderer.cs" />
@@ -121,6 +121,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\textures\ForestTile.png" />
     <Content Include="data\textures\Hunter\Hunter_Attack.png" />
     <Content Include="data\textures\Hunter\Hunter_Idle.png" />
     <Content Include="data\textures\Hunter\Hunter_Walk.png" />
@@ -131,10 +132,12 @@
     <Content Include="data\textures\TrollBack.png" />
     <Content Include="data\textures\TrollFront.png" />
     <Content Include="data\textures\TrollSide.png" />
+    <Content Include="data\textures\UnholyForestTile.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\characters\" />
     <Folder Include="data\config\" />
+    <Folder Include="data\textures\World\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

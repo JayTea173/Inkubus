@@ -30,7 +30,9 @@ namespace Inkubus.Engine.Graphics.Renderers
                     WorldTile currentTile = world.tiles[y * world.Width + x];
                     var size = currentTile.sprite.Size;
                     var sizehalf = size * 0.5f;
-                    Matrix4 modelView = Matrix4.CreateScale(currentTile.sprite.Size3) * Matrix4.CreateTranslation((float)x * size[0] + sizehalf[0] - (world.Width * sizehalf[0]), (float)y * size[1] + sizehalf[1] - (world.Height * sizehalf[1]), -1f);
+
+                    Vector2 cameraPosition = Camera.current.GetPosition();
+                    Matrix4 modelView = Matrix4.CreateScale(currentTile.sprite.Size3) * Matrix4.CreateTranslation((float)x * size[0] + sizehalf[0] - (world.Width * sizehalf[0]) - cameraPosition.X, (float)y * size[1] + sizehalf[1] - (world.Height * sizehalf[1]) - cameraPosition.Y, -1f);
                     GL.UniformMatrix4(21, false, ref modelView);
                     currentTile.shader.Use();
                     currentTile.sprite.Bind(0, 0);

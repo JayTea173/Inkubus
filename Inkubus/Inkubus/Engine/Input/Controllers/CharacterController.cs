@@ -4,18 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Input;
+using OpenTK;
 
 namespace Inkubus.Engine.Input.Controllers
 {
     using GameObjects;
+    using Graphics;
 
     class CharacterController : Controller
     {
         private Character character;
+        private Camera camera;
 
-        public CharacterController(Character _character)
+        public CharacterController(Character _character, Camera _camera)
         {
             character = _character;
+            camera = _camera;
         }
 
         public override void RegisterEventHandlers(InputManager inputManager)
@@ -30,6 +34,20 @@ namespace Inkubus.Engine.Input.Controllers
             inputManager.RegisterKeybinding(new KeyboardEvent(Key.S), character.Motor.MoveDown);
             inputManager.RegisterKeybinding(new KeyboardEvent(Key.A), character.Motor.MoveLeft);
             inputManager.RegisterKeybinding(new KeyboardEvent(Key.D), character.Motor.MoveRight);*/
+        }
+
+        public void Update()
+        {
+            Vector2 pos = Camera.current.GetPosition();
+            Vector2 newPos = character.GetPosition();
+            /*float lerp = InkubusCore.deltaTime * 50f;
+
+            Vector2 interpolPos = new Vector2(pos.X * lerp + (1f-lerp) * newPos.X,
+                pos.Y * lerp + (1f - lerp) * newPos.Y);*/
+
+            var interpolPos = new Vector2((float)Math.Round(newPos.X * 2f), (float)Math.Round(newPos.Y * 2f));
+            interpolPos *= 0.5f;
+            Camera.current.SetPosition(interpolPos);
         }
 
         public override void UnregisterEventHandlers(InputManager inputManager)

@@ -46,7 +46,7 @@ namespace Inkubus
 
         public static InkubusCore Instance;
 
-        public InkubusCore(int x, int y, int width, int height, GraphicsMode mode, GameWindowFlags flags, DisplayDevice device) : base(width, height, mode, "Inkubus ~~" + versionString + " @" + width + "x" + height, flags, device, 4, 4, GraphicsContextFlags.ForwardCompatible)
+        public InkubusCore(int x, int y, int width, int height, GraphicsMode mode, GameWindowFlags flags, DisplayDevice device) : base(width, height, mode, "Inkubus", flags, device, 4, 4, GraphicsContextFlags.ForwardCompatible)
         {
             Instance = this;
             //WindowBorder = WindowBorder.Hidden;
@@ -125,25 +125,32 @@ namespace Inkubus
             r.Animations.Get(AnimationName.Attack).AddFlag(ActorFlags.CantMove); 
 
             world = new Engine.GameObjects.World(8, 8);
-            world.Fill(new WorldTile(new Engine.Graphics.Sprite("..\\data\\textures\\ForestTile.png", 64f, 64f, 1f, false), r.Shader));
+            world.Fill(new WorldTile(new Engine.Graphics.Sprite("..\\data\\textures\\World\\Dirt02.png", 64f, 64f, 1f), r.Shader));
             
 
-            controller = new CharacterController(infector);
+            controller = new CharacterController(infector, camera);
             controller.RegisterEventHandlers(inputManager);
 
             //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-            GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
-            GL.Enable(EnableCap.PolygonOffsetFill);
-            GL.Enable(EnableCap.Blend);
-            GL.DepthMask(true);
-            GL.Enable(EnableCap.DepthTest);
-
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             GL.PatchParameter(PatchParameterInt.PatchVertices, 3);
             GL.PointSize(3);
 
-            GL.Disable(EnableCap.CullFace);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.SrcAlpha);
+            GL.DepthMask(true);
+
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.Enable(EnableCap.DepthTest);
+            GL.Disable(EnableCap.CullFace);
+
+
+            //GL.Disable(EnableCap.CullFace);
+
+
+            /* GL.Enable(EnableCap.Blend);
+             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+             GL.Enable(EnableCap.DepthTest);
+             GL.Enable(EnableCap.CullFace);*/
 
         }
         protected override void OnResize(EventArgs args)
@@ -153,6 +160,8 @@ namespace Inkubus
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            Title = "Inkubus ~~" + versionString + " @" + Width + "x" + Height + " - " + (1f / e.Time).ToString(".0") + " fps";
+
             deltaTime = (float)e.Time;
             dDeltaTime = e.Time;
             time += e.Time;
@@ -164,8 +173,8 @@ namespace Inkubus
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-           
 
+            controller.Update();
             camera.Bind();
 
             world.Render();

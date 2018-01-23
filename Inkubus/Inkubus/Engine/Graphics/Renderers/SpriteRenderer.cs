@@ -193,8 +193,8 @@ namespace Inkubus.Engine.Graphics.Renderers
             //rotation *= r1;
             Vector2 pos = actor.GetPosition();
 
-
-            Matrix4 modelView = Matrix4.CreateRotationZ(actor.Angle) * Matrix4.CreateScale(scale) * Matrix4.CreateTranslation(pos.X, pos.Y, 0f);
+            Vector2 cameraPosition = Camera.current.GetPosition();
+            Matrix4 modelView = Matrix4.CreateRotationZ(actor.Angle) * Matrix4.CreateScale(scale) * Matrix4.CreateTranslation(pos.X - cameraPosition.X, pos.Y - cameraPosition.Y, 0f);
             GL.UniformMatrix4(21, false, ref modelView);
 
             shader.Use();
