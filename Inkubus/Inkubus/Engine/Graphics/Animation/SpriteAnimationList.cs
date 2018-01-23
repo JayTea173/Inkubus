@@ -10,15 +10,8 @@ namespace Inkubus.Engine.Graphics.Animation
 
     using Graphics.Renderers;
 
-    delegate void AnimationEventFunction(AnimationEventArgs args);
+    delegate void AnimationEventFunction(SpriteRenderer renderer);
 
-     struct AnimationEventArgs
-    {
-
-        public SpriteRenderer renderer;
-
-
-    }
 
     class SpriteAnimationList
     {
@@ -68,11 +61,13 @@ namespace Inkubus.Engine.Graphics.Animation
 
     }
 
+
+
     class SpriteAnimation
     {
         public Sprite[] spriteSheetVariants;
         public AnimationName name;
-        public int animationFlags;
+        public ActorFlags flags;
         public bool loops = true;
         public bool playing = false;
         public int currentVariation = 0;
@@ -96,6 +91,21 @@ namespace Inkubus.Engine.Graphics.Animation
             loops = !(animationName == AnimationName.Attack || animationName == AnimationName.Death);
         }
 
+        public void AddFlag(ActorFlags flag)
+        {
+            flags |= flag;
+        }
+
+        public void RemoveFlag(ActorFlags flag)
+        {
+            flags &= flag;
+        }
+
+        public bool HasFlag(ActorFlags flag)
+        {
+            return (flags & flag) == flag;
+        }
+
         public int GetFrameByTime(float animationTime)
         {
             var sprite = spriteSheetVariants[currentVariation];
@@ -114,7 +124,7 @@ namespace Inkubus.Engine.Graphics.Animation
 
         public bool IsDone(int frame)
         {
-            return frame >= spriteSheetVariants[currentVariation].Frames;
+            return (frame+1) >= spriteSheetVariants[currentVariation].Frames;
         }
     }
 

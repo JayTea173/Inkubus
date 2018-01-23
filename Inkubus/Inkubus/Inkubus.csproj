@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Flags.cs" />
     <Compile Include="Engine\GameObjects\Characters\Attack.cs" />
     <Compile Include="Engine\Graphics\Animation\SpriteAnimationList.cs" />
     <Compile Include="Engine\Input\AxisEvent.cs" />

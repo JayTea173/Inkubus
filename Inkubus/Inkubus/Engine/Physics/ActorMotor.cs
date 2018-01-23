@@ -10,6 +10,8 @@ namespace Inkubus.Engine.Physics
 {
     using GameObjects;
 
+    using Graphics.Animation;
+
     class ActorMotor
     {
         protected Actor actor;
@@ -19,6 +21,7 @@ namespace Inkubus.Engine.Physics
 
         public float movementSpeed = 1f;
         public float turnRate = 1f;
+
 
 
 
@@ -70,7 +73,7 @@ namespace Inkubus.Engine.Physics
                     //this is when we look in the exact opposite direction we want to go - always turn right
                     dot = 1;
                 }
-                InkubusCore.Instance.Title = "facing: " + facing + "scalar: " + dot;
+                
                 float angle = turnRate * Mathf.ToDeg * InkubusCore.deltaTime;
                 float dotAbs = dot;
 

@@ -19,12 +19,9 @@ namespace Inkubus.Engine.GameObjects
     {
         protected SpriteRenderer renderer;
 
-        public SpriteRenderer Renderer
+        public SpriteRenderer GetRenderer()
         {
-            get
-            {
-                return Renderer;
-            }
+            return renderer;
         }
 
         protected ActorMotor motor;
@@ -47,7 +44,7 @@ namespace Inkubus.Engine.GameObjects
 
         public Character(string textureDir, int shaderId, int spriteSizeX, int spriteSizeY)
         {
-            renderer = new SpriteRenderer(ShaderManager.Instance.GetShaderProgramById(shaderId), textureDir, spriteSizeX, spriteSizeY);
+            renderer = new SpriteRenderer(this, ShaderManager.Instance.GetShaderProgramById(shaderId), textureDir, spriteSizeX, spriteSizeY);
             motor = new ActorMotor(this);
 
 
@@ -60,7 +57,6 @@ namespace Inkubus.Engine.GameObjects
 
 
             renderer.Animate(motor.Facing, motor.MoveDir);
-
 
             motor.Update();
         }
@@ -92,6 +88,7 @@ namespace Inkubus.Engine.GameObjects
             if (renderer.CurrentAnimation.name == AnimationName.Idle || renderer.CurrentAnimation.name == AnimationName.Walk)
             {
                 renderer.SetAnimation(AnimationName.Attack, true);
+                
             }
         }
 
@@ -103,6 +100,11 @@ namespace Inkubus.Engine.GameObjects
         public void SetTurnRate(float degreesPerSecond)
         {
             motor.turnRate = degreesPerSecond;
+        }
+
+        public void OnAttackAnimationEnd(SpriteRenderer renderer)
+        {
+            renderer.SetAnimation(AnimationName.Idle, true);
         }
 
     }
