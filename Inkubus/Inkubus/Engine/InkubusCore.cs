@@ -9,6 +9,7 @@ using OpenTK.Input;
 
 namespace Inkubus
 {
+    using Engine;
     using Engine.Input;
     using Engine.Input.Controllers;
     using Engine.GameObjects;
@@ -113,8 +114,14 @@ namespace Inkubus
             //infector = new Character("Infector", 0, 64, 64);
             infector = new Character("Hunter", 0, 192, 192);
 
+
+            //Setup "infector" character
             infector.SetMovementSpeed(25.0f);
             infector.SetTurnRate(270.0f);
+            var r = infector.GetRenderer();
+            r.onAnimationDone += infector.OnAttackAnimationEnd;
+            r.Animations.Get(AnimationName.Attack).AddFlag(ActorFlags.CantMove); 
+
             
             controller = new CharacterController(infector);
             controller.RegisterEventHandlers(inputManager);

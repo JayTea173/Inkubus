@@ -31,6 +31,8 @@ namespace Inkubus.Engine.Graphics.Renderers
 
         public event AnimationEventFunction onAnimationDone;
 
+        protected Actor parent;
+
         public SpriteAnimationList Animations
         {
             get
@@ -51,10 +53,15 @@ namespace Inkubus.Engine.Graphics.Renderers
             {
                 if (currentAnimation != value)
                 {
+                    if (currentAnimation != null)
+                        parent.RemoveFlag(currentAnimation.flags);
+
                     currentAnimation = value;
 
                     SetSprite(value.spriteSheetVariants[0]);
                     sprite.SetLooping(currentAnimation.loops);
+
+                    parent.AddFlag(currentAnimation.flags);
                 }
             }
         }
@@ -79,9 +86,7 @@ namespace Inkubus.Engine.Graphics.Renderers
             {
                 if (AdvanceAnimation())
                 {
-                    var args = new AnimationEventArgs();
-                    args.renderer = this;
-                    onAnimationDone.Invoke(args);
+                    onAnimationDone.Invoke(this);
                 }
 
             }
@@ -128,16 +133,18 @@ namespace Inkubus.Engine.Graphics.Renderers
         }
 
 
-        public SpriteRenderer(Sprite sprite, ShaderProgram shader)
+        public SpriteRenderer(Actor actor, Sprite sprite, ShaderProgram shader)
         {
+            parent = actor;
             this.sprite = sprite;
             this.shader = shader;
             scale = sprite.Size3;
             SetAnimation(AnimationName.Idle);
         }
 
-        public SpriteRenderer(ShaderProgram shader, string textureDir, int spriteSizeX, int spriteSizeY)
+        public SpriteRenderer(Actor actor, ShaderProgram shader, string textureDir, int spriteSizeX, int spriteSizeY)
         {
+            parent = actor;
             this.shader = shader;
             animations = new SpriteAnimationList(textureDir, spriteSizeX, spriteSizeY);
             SetAnimation(AnimationName.Idle);

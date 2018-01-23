@@ -12,7 +12,9 @@ namespace Inkubus.Engine.GameObjects
         protected Vector2 position;
         protected float angle;
         protected Vector2 scale;
-        
+
+        public ActorFlags flags;
+
         public float Angle
         {
             get
@@ -46,6 +48,23 @@ namespace Inkubus.Engine.GameObjects
         public void Translate(float x, float y)
         {
             position += new Vector2(x, y);
+        }
+
+        public void AddFlag(ActorFlags flag)
+        {
+            flags |= flag;
+            InkubusCore.Instance.Title = "Flags: " + flags.ToString();
+        }
+
+        public void RemoveFlag(ActorFlags flag)
+        {
+            flags &= flag;
+            InkubusCore.Instance.Title = "Flags: " + flags.ToString();
+        }
+
+        public bool HasFlag(ActorFlags flag)
+        {
+            return (flags & flag) == flag;
         }
     }
 }
