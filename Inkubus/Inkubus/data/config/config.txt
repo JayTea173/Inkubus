@@ -2,4 +2,4 @@
 
 GameWindowSettings.width=400
 GameWindowSettings.height=210
-GameWindowSettings.fullscreen=true
+GameWindowSettings.fullscreen=false
