@@ -46,7 +46,7 @@ namespace Inkubus
 
         public static InkubusCore Instance;
 
-        public InkubusCore(int x, int y, int width, int height, GraphicsMode mode, GameWindowFlags flags, DisplayDevice device) : base(width, height, mode, "Inkubus ~~" + versionString, flags, device, 4, 4, GraphicsContextFlags.ForwardCompatible)
+        public InkubusCore(int x, int y, int width, int height, GraphicsMode mode, GameWindowFlags flags, DisplayDevice device) : base(width, height, mode, "Inkubus ~~" + versionString + " @" + width + "x" + height, flags, device, 4, 4, GraphicsContextFlags.ForwardCompatible)
         {
             Instance = this;
             //WindowBorder = WindowBorder.Hidden;
@@ -56,7 +56,6 @@ namespace Inkubus
 
             inputManager = new InputManager();
             Run(1.0d / 60.0d);
-
 
 
 
