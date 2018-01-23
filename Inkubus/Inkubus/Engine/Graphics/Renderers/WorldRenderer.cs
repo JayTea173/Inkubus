@@ -29,7 +29,7 @@ namespace Inkubus.Engine.Graphics.Renderers
                 {
                     WorldTile currentTile = world.tiles[y * world.Width + x];
                     var size = currentTile.sprite.Size;
-                    Matrix4 modelView = Matrix4.CreateScale(currentTile.sprite.Size3) * Matrix4.CreateTranslation((float)x*size[0], (float)y* size[1], -1f);
+                    Matrix4 modelView = Matrix4.CreateScale(currentTile.sprite.Size3) * Matrix4.CreateTranslation((float)x * size[0] - (world.Width * size[0] / 2f), (float)y * size[1] - (world.Height * size[1] / 2f), -1f);
                     GL.UniformMatrix4(21, false, ref modelView);
                     currentTile.shader.Use();
                     currentTile.sprite.Bind(0, 0);
