@@ -23,6 +23,14 @@ namespace Inkubus.Engine.Graphics
 
         protected Vector2 size;
 
+        public Vector2 Size
+        {
+            get
+            {
+                return size;
+            }
+        }
+
         public Vector3 Size3
         {
             get
@@ -63,9 +71,9 @@ namespace Inkubus.Engine.Graphics
 
         protected bool loopAnimation = true;
 
-        public Sprite(string textureFileName, float sizeX, float sizeY, float fps)
+        public Sprite(string textureFileName, float sizeX, float sizeY, float fps, bool transparent = true)
         {
-            texture = new Texture(textureFileName);
+            texture = new Texture(textureFileName,transparent);
             rotation = Matrix4.Identity;
             position = Vector3.Zero;
 

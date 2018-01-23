@@ -47,6 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -65,7 +66,9 @@
   <ItemGroup>
     <Compile Include="Engine\Flags.cs" />
     <Compile Include="Engine\GameObjects\Characters\Attack.cs" />
+    <Compile Include="Engine\GameObjects\World.cs" />
     <Compile Include="Engine\Graphics\Animation\SpriteAnimationList.cs" />
+    <Compile Include="Engine\Graphics\Renderers\WorldRenderer.cs" />
     <Compile Include="Engine\Input\AxisEvent.cs" />
     <Compile Include="Engine\Input\AxisManager.cs" />
     <Compile Include="Engine\Input\Controllers\CharacterController.cs" />
@@ -117,7 +120,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\config\config.txt" />
     <Content Include="data\textures\Hunter\Hunter_Attack.png" />
     <Content Include="data\textures\Hunter\Hunter_Idle.png" />
     <Content Include="data\textures\Hunter\Hunter_Walk.png" />
@@ -129,7 +131,9 @@
     <Content Include="data\textures\TrollFront.png" />
     <Content Include="data\textures\TrollSide.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="data\config\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

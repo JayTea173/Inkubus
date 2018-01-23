@@ -38,6 +38,8 @@ namespace Inkubus
 
         protected CharacterController controller;
 
+        protected World world;
+
 
         public static float deltaTime = 0.0f;
         public static double dDeltaTime = 0.0d;
@@ -62,7 +64,7 @@ namespace Inkubus
 
         private void OnClosed(object sender, EventArgs eventArgs)
         {
-            
+
             Exit();
         }
 
@@ -79,7 +81,7 @@ namespace Inkubus
         {
             base.OnKeyDown(e);
             inputManager.OnKeyDown(e);
-            
+
 
         }
 
@@ -120,9 +122,12 @@ namespace Inkubus
             infector.SetTurnRate(270.0f);
             var r = infector.GetRenderer();
             r.onAnimationDone += infector.OnAttackAnimationEnd;
-            r.Animations.Get(AnimationName.Attack).AddFlag(ActorFlags.CantMove); 
+            r.Animations.Get(AnimationName.Attack).AddFlag(ActorFlags.CantMove);
 
-            
+            world = new Engine.GameObjects.World(8, 8);
+            world.Fill(new WorldTile(new Engine.Graphics.Sprite("..\\data\\textures\\ForestTile.png", 64f, 64f, 1f, false), r.Shader));
+
+
             controller = new CharacterController(infector);
             controller.RegisterEventHandlers(inputManager);
 
@@ -130,12 +135,13 @@ namespace Inkubus
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
             GL.Enable(EnableCap.PolygonOffsetFill);
             GL.Enable(EnableCap.Blend);
-            GL.DepthMask(false);
+            GL.DepthMask(true);
             GL.PatchParameter(PatchParameterInt.PatchVertices, 3);
             GL.PointSize(3);
 
             GL.Disable(EnableCap.CullFace);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.SrcAlpha);
+            GL.Enable(EnableCap.DepthTest);
 
         }
         protected override void OnResize(EventArgs args)
@@ -151,20 +157,20 @@ namespace Inkubus
 
             inputManager.DigestAll();
 
-
             infector.Update();
-            
+
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-           
+
 
             camera.Bind();
 
+            world.Render();
             infector.Render();
-           
 
-            
+
+
             //sprite.Rotate(deltaTime * 10.0f);
             //sprite.Rotate(deltaTime * 90f);
 
