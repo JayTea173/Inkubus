@@ -99,8 +99,8 @@ namespace Inkubus.Engine.Physics
                 moveDir = Vector2.Zero;
             }
 
-            if (!actor.HasFlag(ActorFlags.CantMove))
-                actor.Translate(moveDir * movementSpeed * InkubusCore.deltaTime);
+            if (!actor.HasFlag(ActorFlags.CantMove) && moveDir != Vector2.Zero)
+                actor.Translate(moveDir.Normalized() * movementSpeed * InkubusCore.deltaTime);
             targetDir = Vector2.Zero;
         }
 

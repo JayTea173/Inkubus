@@ -10,6 +10,7 @@ using OpenTK.Input;
 namespace Inkubus
 {
     using Engine;
+    using Engine.IO;
     using Engine.Input;
     using Engine.Input.Controllers;
     using Engine.GameObjects;
@@ -34,7 +35,7 @@ namespace Inkubus
         protected InputManager inputManager;
         protected GameRenderer renderer;
 
-        protected Character infector;
+        protected CharacterManager characterManager;
 
         protected CharacterController controller;
 
@@ -69,7 +70,7 @@ namespace Inkubus
 
         public override void Exit()
         {
-            infector.Dispose();
+            characterManager.Dispose();
             ShaderManager.Instance.Destroy();
 
             base.Exit();
@@ -79,6 +80,9 @@ namespace Inkubus
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             base.OnKeyDown(e);
+            if (e.Key == Key.Escape || (e.Key == Key.F4 && e.Alt))
+                Environment.Exit(0);
+
             inputManager.OnKeyDown(e);
             
 
@@ -111,18 +115,26 @@ namespace Inkubus
                 "default.vert"
             });
 
-            
-            //new Sprite("Infector_Walk.png", 64, 64, 15)
-            //infector = new Character("Infector", 0, 64, 64);
-            infector = new Character("Hunter", 0, 192, 192);
 
+            characterManager = new CharacterManager();
+
+            Character infector = new Character("Hunter", "Hunter", 0, 192, 192);
 
             //Setup "infector" character
-            infector.SetMovementSpeed(25.0f);
-            infector.SetTurnRate(270.0f);
+            //infector.Deserialize("..\\data\\characters\\Hunter\\hunter.dat");
+
+            Blueprint.Read<Character>(ref infector, "..\\data\\characters\\Hunter\\hunter.dat");
+            //infector.TurnRate = 270.0f;
+            //infector.MovementSpeed = 28.0f;
             var r = infector.GetRenderer();
             r.onAnimationDone += infector.OnAttackAnimationEnd;
-            r.Animations.Get(AnimationName.Attack).AddFlag(ActorFlags.CantMove); 
+            r.Animations.Get(AnimationName.Attack).AddFlag(ActorFlags.CantMove);
+
+            Blueprint.Write<Character>(infector, "..\\data\\characters\\Hunter\\hunter.dat");
+            //infector.Serialize("..\\data\\characters\\Hunter\\hunter.dat");
+            characterManager.Add(infector);
+
+            
 
             world = new Engine.GameObjects.World(8, 8);
             world.Fill(new WorldTile(new Engine.Graphics.Sprite("..\\data\\textures\\World\\Dirt02.png", 64f, 64f, 1f), r.Shader));
@@ -168,7 +180,7 @@ namespace Inkubus
 
             inputManager.DigestAll();
 
-            infector.Update();
+            characterManager.Update();
             
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -178,7 +190,7 @@ namespace Inkubus
             camera.Bind();
 
             world.Render();
-            infector.Render();
+            characterManager.Render();
            
 
             

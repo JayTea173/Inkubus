@@ -126,8 +126,6 @@ namespace Inkubus.Engine.Graphics
         {
             if (disposing)
                 GL.DeleteTexture(id);
-
-
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using System.IO;
 
 namespace Inkubus.Engine.GameObjects
 {
@@ -12,7 +13,8 @@ namespace Inkubus.Engine.GameObjects
     using Graphics.Renderers;
     using Graphics.Shaders;
     using Physics;
-
+    using Characters;
+    using IO;
 
 
     class Character : Actor
@@ -26,7 +28,29 @@ namespace Inkubus.Engine.GameObjects
 
         protected ActorMotor motor;
 
-        protected float movementSpeed = 1f;
+        [BPD(1)] public float MovementSpeed
+        {
+            get
+            {
+                return motor.movementSpeed;
+            }
+            set
+            {
+                motor.movementSpeed = value;
+            }
+        }
+
+        [BPD(2)] public float TurnRate
+        {
+            get
+            {
+                return motor.turnRate;
+            }
+            set
+            {
+                motor.turnRate = value;
+            }
+        }
 
 
 
@@ -40,9 +64,7 @@ namespace Inkubus.Engine.GameObjects
             }
         }
 
-
-
-        public Character(string textureDir, int shaderId, int spriteSizeX, int spriteSizeY)
+        public Character(string dataDir, string textureDir, int shaderId, int spriteSizeX, int spriteSizeY)
         {
             renderer = new SpriteRenderer(this, ShaderManager.Instance.GetShaderProgramById(shaderId), textureDir, spriteSizeX, spriteSizeY);
             motor = new ActorMotor(this);
@@ -97,16 +119,32 @@ namespace Inkubus.Engine.GameObjects
             motor.movementSpeed = pixelsPerSecond;
         }
 
-        public void SetTurnRate(float degreesPerSecond)
-        {
-            motor.turnRate = degreesPerSecond;
-        }
-
         public void OnAttackAnimationEnd(SpriteRenderer renderer)
         {
             renderer.SetAnimation(AnimationName.Idle, true);
         }
 
+        public void Serialize(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Create);
+            BinaryWriter bw = new BinaryWriter(fs, Encoding.ASCII);
+
+            bw.Write(MovementSpeed);
+
+            bw.Close();
+            fs.Close();
+        }
+
+        public void Deserialize(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Open);
+            BinaryReader br = new BinaryReader(fs, Encoding.ASCII);
+
+            MovementSpeed = br.ReadSingle();
+
+            br.Close();
+            fs.Close();
+        }
     }
 
 

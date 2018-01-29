@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\CharacterManager.cs" />
     <Compile Include="Engine\Flags.cs" />
     <Compile Include="Engine\GameObjects\Characters\Attack.cs" />
     <Compile Include="Engine\GameObjects\World.cs" />
@@ -93,8 +94,8 @@
     <Compile Include="Engine\InkubusCore.cs" />
     <Compile Include="Engine\Input\InputManager.cs" />
     <Compile Include="Engine\Input\KeyboardEvent.cs" />
+    <Compile Include="Engine\IO\Blueprint.cs" />
     <Compile Include="Engine\IO\ConfigReader.cs" />
-    <Compile Include="Engine\IO\DataContainer.cs" />
     <Compile Include="Engine\Mathf.cs" />
     <Compile Include="Engine\Object.cs" />
     <Compile Include="Engine\Physics\ActorMotor.cs" />
@@ -103,6 +104,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="data\characters\Hunter\hunter.chr" />
+    <None Include="data\characters\Hunter\hunter.dat" />
     <None Include="data\shaders\default.frag" />
     <None Include="data\shaders\default.vert" />
     <None Include="OpenTK.dll.config" />
@@ -135,7 +138,6 @@
     <Content Include="data\textures\UnholyForestTile.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="data\characters\" />
     <Folder Include="data\config\" />
     <Folder Include="data\textures\World\" />
   </ItemGroup>
