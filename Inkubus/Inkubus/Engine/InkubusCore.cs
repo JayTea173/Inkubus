@@ -2,10 +2,12 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
+
 
 namespace Inkubus
 {
@@ -14,6 +16,7 @@ namespace Inkubus
     using Engine.Input;
     using Engine.Input.Controllers;
     using Engine.GameObjects;
+    using Engine.GameObjects.Characters;
     using Engine.Graphics;
     using Engine.Graphics.Animation;
     using Engine.Graphics.Shaders;
@@ -32,8 +35,11 @@ namespace Inkubus
         double time = 0.0d;
 
         protected Camera camera;
+        protected BlueprintManager bpManager;
         protected InputManager inputManager;
         protected GameRenderer renderer;
+        protected PhysicsEngine physX;
+
 
         protected CharacterManager characterManager;
 
@@ -81,7 +87,11 @@ namespace Inkubus
         {
             base.OnKeyDown(e);
             if (e.Key == Key.Escape || (e.Key == Key.F4 && e.Alt))
+            {
+                InkubusCore.Instance.Exit();
                 Environment.Exit(0);
+            }
+                
 
             inputManager.OnKeyDown(e);
             
@@ -116,31 +126,16 @@ namespace Inkubus
             });
 
 
+            bpManager = new BlueprintManager();
+
             characterManager = new CharacterManager();
-
-            Character infector = new Character("Hunter", "Hunter", 0, 192, 192);
-
-            //Setup "infector" character
-            //infector.Deserialize("..\\data\\characters\\Hunter\\hunter.dat");
-
-            Blueprint.Read<Character>(ref infector, "..\\data\\characters\\Hunter\\hunter.dat");
-            //infector.TurnRate = 270.0f;
-            //infector.MovementSpeed = 28.0f;
-            var r = infector.GetRenderer();
-            r.onAnimationDone += infector.OnAttackAnimationEnd;
-            r.Animations.Get(AnimationName.Attack).AddFlag(ActorFlags.CantMove);
-
-            Blueprint.Write<Character>(infector, "..\\data\\characters\\Hunter\\hunter.dat");
-            //infector.Serialize("..\\data\\characters\\Hunter\\hunter.dat");
-            characterManager.Add(infector);
-
-            
+            characterManager.ReadBlueprints();
 
             world = new Engine.GameObjects.World(8, 8);
-            world.Fill(new WorldTile(new Engine.Graphics.Sprite("..\\data\\textures\\World\\Dirt02.png", 64f, 64f, 1f), r.Shader));
+            world.Fill(new WorldTile(new Engine.Graphics.Sprite("..\\data\\textures\\World\\Dirt02.png", 64f, 64f, 1f), characterManager[0].GetRenderer().Shader));
             
 
-            controller = new CharacterController(infector, camera);
+            controller = new CharacterController(characterManager[0], camera);
             controller.RegisterEventHandlers(inputManager);
 
             //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);

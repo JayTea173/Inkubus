@@ -52,9 +52,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenCL.Net">
-      <HintPath>..\packages\OpenCL.Net.2.2.9.0\lib\net40\OpenCL.Net.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK.3.0.0-pre\lib\net20\OpenTK.dll</HintPath>
     </Reference>
@@ -72,6 +69,7 @@
     <Compile Include="Engine\CharacterManager.cs" />
     <Compile Include="Engine\Flags.cs" />
     <Compile Include="Engine\GameObjects\Characters\Attack.cs" />
+    <Compile Include="Engine\GameObjects\Characters\CharacterBlueprintMetadata.cs" />
     <Compile Include="Engine\GameObjects\World.cs" />
     <Compile Include="Engine\Graphics\Animation\SpriteAnimationList.cs" />
     <Compile Include="Engine\Graphics\Renderers\WorldRenderer.cs" />
@@ -100,9 +98,13 @@
     <Compile Include="Engine\Input\InputManager.cs" />
     <Compile Include="Engine\Input\KeyboardEvent.cs" />
     <Compile Include="Engine\IO\Blueprint.cs" />
+    <Compile Include="Engine\IO\BlueprintManager.cs" />
     <Compile Include="Engine\IO\ConfigReader.cs" />
+    <Compile Include="Engine\IO\MetadataHandler.cs" />
+    <Compile Include="Engine\IO\TypeMetadataHandler.cs" />
     <Compile Include="Engine\Mathf.cs" />
     <Compile Include="Engine\Object.cs" />
+    <Compile Include="Engine\Physics\PhysicsEngine.cs" />
     <Compile Include="Engine\Physics\ActorMotor.cs" />
     <Compile Include="Engine\Physics\AnimationCollider.cs" />
     <Compile Include="Engine\Physics\PhysicsEngine.cs" />
@@ -111,8 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="data\characters\Hunter\hunter.chr" />
-    <None Include="data\characters\Hunter\hunter.dat" />
+    <None Include="data\characters\Hunter\hunter.bp" />
     <None Include="data\shaders\default.frag" />
     <None Include="data\shaders\default.vert" />
     <None Include="OpenTK.dll.config" />
@@ -150,13 +151,6 @@
     <Folder Include="data\textures\World\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\OpenCL.Net.2.2.9.0\build\net40\OpenCL.Net.targets" Condition="Exists('..\packages\OpenCL.Net.2.2.9.0\build\net40\OpenCL.Net.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\OpenCL.Net.2.2.9.0\build\net40\OpenCL.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCL.Net.2.2.9.0\build\net40\OpenCL.Net.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
