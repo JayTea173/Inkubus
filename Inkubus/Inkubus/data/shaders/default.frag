@@ -1,6 +1,6 @@
 #version 450 core
 in vec2 vs_uv;
-uniform ivec2 textureSize;
+uniform vec2 textureSize;
 
 uniform sampler2D textureObject;
 out vec4 color;

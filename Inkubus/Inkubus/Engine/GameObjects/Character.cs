@@ -17,6 +17,7 @@ namespace Inkubus.Engine.GameObjects
     using IO;
 
 
+    [BPDClassMetadataAttribute(typeof(CharacterBlueprintMetadata))]
     class Character : Actor
     {
         protected SpriteRenderer renderer;
@@ -64,14 +65,15 @@ namespace Inkubus.Engine.GameObjects
             }
         }
 
-        public Character(string dataDir, string textureDir, int shaderId, int spriteSizeX, int spriteSizeY)
+        public virtual void SetupRenderer(string dataDir, string textureDir, int shaderId, int spriteSizeX, int spriteSizeY)
         {
             renderer = new SpriteRenderer(this, ShaderManager.Instance.GetShaderProgramById(shaderId), textureDir, spriteSizeX, spriteSizeY);
-            motor = new ActorMotor(this);
-
-
             renderer.SetAnimation(AnimationName.Idle);
+        }
 
+        public Character()
+        {
+            motor = new ActorMotor(this);
         }
 
         public void Update()

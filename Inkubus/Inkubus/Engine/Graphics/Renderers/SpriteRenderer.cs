@@ -76,7 +76,7 @@ namespace Inkubus.Engine.Graphics.Renderers
             }
         }
 
-
+        
         static SpriteRenderer()
         {
             quadMesh = new Mesh(Primitives.quad, PrimitiveType.TriangleStrip);
@@ -84,7 +84,8 @@ namespace Inkubus.Engine.Graphics.Renderers
 
         public void SetFacingAngle(float rad)
         {
-            currentAngle = ((int)(rad / Mathf.PI / 2f * sprite.Angles) + 4) % sprite.Angles;
+            
+            currentAngle = ((int)Math.Round(rad / Mathf.PI2 * sprite.Angles) + 4) % sprite.Angles;
             while (currentAngle < 0)
                 currentAngle += sprite.Angles;
 
