@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Inkubus.Engine.GameObjects;
 using OpenTK;
 
-namespace Inkubus.Engine.Graphics.Renderers
+namespace Inkubus.Engine.Gfx.Renderers
 {
     class Renderer : IDisposable
     {

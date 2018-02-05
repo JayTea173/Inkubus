@@ -9,7 +9,7 @@ using OpenTK;
 namespace Inkubus.Engine.Input.Controllers
 {
     using GameObjects;
-    using Graphics;
+    using Gfx;
 
     class CharacterController : Controller
     {

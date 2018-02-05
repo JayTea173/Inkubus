@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inkubus.Engine.Physics
+namespace Inkubus.Engine
 {
-    using Inkubus.Engine.Gfx;
-    class AnimationCollider
+    class PhysicsEngine
     {
-        
     }
 }

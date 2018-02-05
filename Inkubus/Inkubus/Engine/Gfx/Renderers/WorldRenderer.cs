@@ -7,7 +7,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Inkubus.Engine.Graphics.Renderers
+namespace Inkubus.Engine.Gfx.Renderers
 {
     using GameObjects;
     class WorldRenderer : Renderer

@@ -9,7 +9,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Inkubus.Engine.Graphics.Shaders
+namespace Inkubus.Engine.Gfx.Shaders
 {
     class Shader
     {

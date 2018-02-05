@@ -8,7 +8,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using Inkubus.Engine.GameObjects;
 
-namespace Inkubus.Engine.Graphics.Renderers
+namespace Inkubus.Engine.Gfx.Renderers
 {
 
     using Shaders;

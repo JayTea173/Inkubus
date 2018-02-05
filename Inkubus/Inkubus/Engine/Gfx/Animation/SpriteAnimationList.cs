@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Inkubus.Engine.Graphics.Animation
+namespace Inkubus.Engine.Gfx.Animation
 {
 
-    using Graphics.Renderers;
+    using Gfx.Renderers;
 
     delegate void AnimationEventFunction(SpriteRenderer renderer);
 
@@ -26,13 +26,13 @@ namespace Inkubus.Engine.Graphics.Animation
 
         public void LoadFromDirectory(string dir, int spriteSizeX, int spriteSizeY)
         {
-            string[] files = Directory.GetFiles("..\\data\\textures\\" + dir);
+            string[] files = Directory.GetFiles("..\\data\\textures" + dir);
 
             foreach (var file in files)
             {
 
                 string fileNameNoExt = Path.GetFileNameWithoutExtension(file);
-                string animationName = fileNameNoExt.Replace(dir + "_", string.Empty);
+                string animationName = fileNameNoExt.Replace(dir.Replace("\\", string.Empty) + "_", string.Empty);
 
                 AnimationName anim;
                 if (System.Enum.TryParse(animationName, out anim))
