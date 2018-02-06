@@ -70,7 +70,6 @@ namespace Inkubus
 
         private void OnClosed(object sender, EventArgs eventArgs)
         {
-            
             Exit();
         }
 
@@ -113,11 +112,6 @@ namespace Inkubus
             camera = new Camera(Width, Height, 2f);
 
             GL.ClearColor(0.0666f, 0f, 0f, 0f);
-
-
-            /*sprite = new Sprite("Infector_Walk.png", 64, 64, 15);
-            spriteRenderer = new SpriteRenderer(sprite);
-            actor = new Actor();*/
 
             ShaderManager.Instance.ReadShaderProgramFromFiles(new string[]
             {

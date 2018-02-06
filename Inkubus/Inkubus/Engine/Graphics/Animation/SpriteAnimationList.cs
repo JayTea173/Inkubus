@@ -26,13 +26,15 @@ namespace Inkubus.Engine.Graphics.Animation
 
         public void LoadFromDirectory(string dir, int spriteSizeX, int spriteSizeY)
         {
-            string[] files = Directory.GetFiles("..\\data\\textures\\" + dir);
+            string[] files = Directory.GetFiles("..\\data\\textures" + dir);
 
             foreach (var file in files)
             {
 
                 string fileNameNoExt = Path.GetFileNameWithoutExtension(file);
-                string animationName = fileNameNoExt.Replace(dir + "_", string.Empty);
+                string animationName = fileNameNoExt.Replace(dir.Replace("\\", string.Empty) + "_", string.Empty);
+                if (animationName.Contains("_data"))
+                    continue;
 
                 AnimationName anim;
                 if (System.Enum.TryParse(animationName, out anim))
