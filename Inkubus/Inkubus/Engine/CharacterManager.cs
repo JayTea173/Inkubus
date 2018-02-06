@@ -10,7 +10,7 @@ namespace Inkubus.Engine
     using GameObjects;
     using GameObjects.Characters;
     using IO;
-    using Graphics.Animation;
+    using Gfx.Animation;
 
     class CharacterManager : List<Character>, IDisposable
     {

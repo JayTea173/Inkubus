@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL4;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Inkubus.Engine.Graphics
+namespace Inkubus.Engine.Gfx
 {
     class Texture : IDisposable
     {

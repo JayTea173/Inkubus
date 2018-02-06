@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inkubus.Engine.Physics
 {
-    using Inkubus.Engine.Graphics;
+    using Inkubus.Engine.Gfx;
     class AnimationCollider
     {
         

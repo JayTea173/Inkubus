@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Inkubus.Engine.GameObjects
 {
-    using Graphics;
-    using Graphics.Renderers;
-    using Graphics.Shaders;
+    using Gfx;
+    using Gfx.Renderers;
+    using Gfx.Shaders;
     class World : Actor
     {
         public WorldTile[] tiles;

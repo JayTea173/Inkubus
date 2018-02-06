@@ -17,10 +17,10 @@ namespace Inkubus
     using Engine.Input.Controllers;
     using Engine.GameObjects;
     using Engine.GameObjects.Characters;
-    using Engine.Graphics;
-    using Engine.Graphics.Animation;
-    using Engine.Graphics.Shaders;
-    using Engine.Graphics.Renderers;
+    using Engine.Gfx;
+    using Engine.Gfx.Animation;
+    using Engine.Gfx.Shaders;
+    using Engine.Gfx.Renderers;
 
 
     class InkubusCore : GameWindow
@@ -126,7 +126,7 @@ namespace Inkubus
             characterManager.ReadBlueprints();
 
             world = new Engine.GameObjects.World(8, 8);
-            world.Fill(new WorldTile(new Engine.Graphics.Sprite("..\\data\\textures\\World\\Dirt02.png", 64f, 64f, 1f), characterManager[0].GetRenderer().Shader));
+            world.Fill(new WorldTile(new Engine.Gfx.Sprite("..\\data\\textures\\World\\Dirt02.png", 64f, 64f, 1f), characterManager[0].GetRenderer().Shader));
             
 
             controller = new CharacterController(characterManager[0], camera);

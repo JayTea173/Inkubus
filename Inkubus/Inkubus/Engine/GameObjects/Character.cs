@@ -8,10 +8,10 @@ using System.IO;
 
 namespace Inkubus.Engine.GameObjects
 {
-    using Graphics;
-    using Graphics.Animation;
-    using Graphics.Renderers;
-    using Graphics.Shaders;
+    using Gfx;
+    using Gfx.Animation;
+    using Gfx.Renderers;
+    using Gfx.Shaders;
     using Physics;
     using Characters;
     using IO;

@@ -10,7 +10,7 @@ namespace Inkubus.Engine.Physics
 {
     using GameObjects;
 
-    using Graphics.Animation;
+    using Gfx.Animation;
 
     class ActorMotor
     {

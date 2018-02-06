@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Inkubus.Engine
 {
-    using Physics;
     class PhysicsEngine
     {
     }

@@ -10,7 +10,7 @@ using OpenTK.Input;
 
 namespace Inkubus.Engine.GameObjects
 {
-    using Graphics;
+    using Gfx;
     class Camera : Actor
     {
         Matrix4 projectionMatrix;

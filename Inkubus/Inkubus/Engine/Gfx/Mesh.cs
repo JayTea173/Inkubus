@@ -6,7 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Inkubus.Engine.Graphics
+namespace Inkubus.Engine.Gfx
 {
     class Mesh : IDisposable
     {
