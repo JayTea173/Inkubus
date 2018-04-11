@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Animation\SpriteAnimationList.cs" />
     <Compile Include="Engine\CharacterManager.cs" />
     <Compile Include="Engine\Flags.cs" />
     <Compile Include="Engine\GameObjects\Characters\Attack.cs" />
@@ -104,15 +105,16 @@
     <Compile Include="Engine\IO\TypeMetadataHandler.cs" />
     <Compile Include="Engine\Mathf.cs" />
     <Compile Include="Engine\Object.cs" />
+    <Compile Include="Engine\PhysicsEngine.cs" />
     <Compile Include="Engine\Physics\ActorMotor.cs" />
     <Compile Include="Engine\Physics\AnimationCollider.cs" />
-    <Compile Include="Engine\Physics\PhysicsEngine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="data\characters\Hunter\hunter.bp" />
+    <None Include="data\fonts\arial.ttf" />
     <None Include="data\shaders\default.frag" />
     <None Include="data\shaders\default.vert" />
     <None Include="OpenTK.dll.config" />

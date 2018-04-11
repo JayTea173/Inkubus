@@ -14,9 +14,9 @@ namespace Inkubus
         static void Main(string[] args)
         {
 
-            BitmapFont someFont = new BitmapFont("arial.ttf");
-            Console.ReadKey();
-            /*
+            //BitmapFont someFont = new BitmapFont("arial.ttf");
+            //Console.ReadKey();
+            
             ConfigReader.Read("config.txt");
 
             DisplayDevice device = DisplayDevice.GetDisplay((DisplayIndex)GameWindowSettings.displayID);
@@ -34,7 +34,7 @@ namespace Inkubus
                 GraphicsMode.Default, 
                 GameWindowSettings.fullscreen ? GameWindowFlags.Fullscreen : GameWindowFlags.FixedWindow, 
                 device);
-                */
+                
 
         }
     }
